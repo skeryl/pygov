@@ -1,7 +1,16 @@
 __author__ = 'scarroll'
 
 
-class Measure(object):
+class UsdaObject(object):
+
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def from_response_data(response_data):
+        raise NotImplemented("This method is not implemented in the base class 'UsdaObject' and must be overriden.")
+
+class Measure(UsdaObject):
 
     @staticmethod
     def from_response_data(response_data):
@@ -9,19 +18,21 @@ class Measure(object):
                        label=response_data["label"], value=response_data["value"])
 
     def __init__(self, quantity, gram_equivalent, label, value):
+        super(Measure, self).__init__()
         self.quantity = quantity
         self.gram_equivalent = gram_equivalent
         self.label = label
         self.value = value
 
 
-class Nutrient(object):
+class Nutrient(UsdaObject):
 
     @staticmethod
     def from_response_data(response_data):
         return Nutrient(id=response_data['id'], name=response_data['name'])
 
     def __init__(self, id, name, group=None, unit=None, value=None, measures=None):
+        super(Nutrient, self).__init__()
         self.id = id
         self.name = name
         self.group = group
@@ -33,13 +44,14 @@ class Nutrient(object):
         return "{0}".format(self.name)
 
 
-class Food(object):
+class Food(UsdaObject):
 
     @staticmethod
     def from_response_data(response_data):
         return Food(id=response_data['id'], name=response_data['name'])
 
     def __init__(self, id, name):
+        super(Food, self).__init__()
         self.id = id
         self.name = name
 
@@ -47,7 +59,7 @@ class Food(object):
         return "{0}".format(self.name)
 
 
-class FoodReport(object):
+class FoodReport(UsdaObject):
 
     @staticmethod
     def __get_measures(raw_measures):
@@ -77,6 +89,7 @@ class FoodReport(object):
                           foot_notes=report["footnotes"],)
 
     def __init__(self, food, nutrients, report_type, foot_notes):
+        super(FoodReport, self).__init__()
         self.food = food
         self.nutrients = nutrients
         self.report_type = report_type
