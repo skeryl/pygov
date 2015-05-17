@@ -10,6 +10,7 @@ class UsdaObject(object):
     def from_response_data(response_data):
         raise NotImplemented("This method is not implemented in the base class 'UsdaObject' and must be overriden.")
 
+
 class Measure(UsdaObject):
 
     @staticmethod
@@ -82,15 +83,18 @@ class FoodReport(UsdaObject):
     @staticmethod
     def from_response_data(response_data):
         report = response_data["report"]
+        type = report["type"]
         food = report['food']
+        food_group = None if type == "Basic" or type == "Statistics" else food["fg"]
         return FoodReport(food=Food(id=food["ndbno"], name=food['name']),
                           nutrients=FoodReport.__get_nutrients(food["nutrients"]),
                           report_type=report["type"],
-                          foot_notes=report["footnotes"],)
+                          foot_notes=report["footnotes"], food_group=food_group)
 
-    def __init__(self, food, nutrients, report_type, foot_notes):
+    def __init__(self, food, nutrients, report_type, foot_notes, food_group):
         super(FoodReport, self).__init__()
         self.food = food
         self.nutrients = nutrients
         self.report_type = report_type
         self.foot_notes = foot_notes
+        self.food_group = food_group

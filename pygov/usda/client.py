@@ -1,8 +1,9 @@
 __author__ = 'scarroll'
 
-from enums import *
-from domain import Nutrient, Food, FoodReport
-from ..base.client import DataGovClientBase, get_response_data
+from pygov.usda.enums import *
+from pygov.usda.domain import Nutrient, Food, FoodReport
+from pygov.base.client import DataGovClientBase, get_response_data
+
 
 class UsdaClient(DataGovClientBase):
 
@@ -27,6 +28,9 @@ class UsdaClient(DataGovClientBase):
         uri = super(UsdaClient, self).build_uri(UsdaApis.ndb, UsdaUriActions.report, type=report_type.value, ndbno=ndb_food_id)
         response_data = get_response_data(uri)
         return FoodReport.from_response_data(response_data)
+
+    def get_nutrient_report(self, ndb_nutrient_id, report_type=UsdaNdbReportType.basic):
+        uri = super(UsdaClient, self).build_uri(UsdaApis.ndb, UsdaUriActions.report, type=report_type.value, ndbno=ndb_nutrient_id)
 
     def __build_item_list(self, data, usda_class):
         result = list()

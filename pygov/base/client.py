@@ -6,12 +6,14 @@ import json
 
 uri_base = 'http://api.data.gov/'
 
+
 def get_response_data(uri):
     response = urllib2.urlopen(uri)
     if response.code != 200:
         raise Exception("Error\r\n\tCode: {0}\r\n\tMessage: {1}".format(response.code, response.msg))
     data = json.load(response.fp)
     return data
+
 
 class DataGovClientBase(object):
 
