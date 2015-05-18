@@ -26,4 +26,4 @@ class DataGovClientBase(object):
         if 'format' not in kwargs:
             kwargs['format'] = 'json'
         params = urllib.urlencode(kwargs)
-        return "{0}{1}{2}/{3}?{4}".format(uri_base, self.uri_part, api.value, uri_action.value, params)
+        return "{0}{1}{2}/{3}?{4}".format(uri_base, self.uri_part, api, uri_action, params)
