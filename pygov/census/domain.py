@@ -1,16 +1,6 @@
 __author__ = 'scarroll'
 
 
-class PopulationReport(object):
-
-    def __init__(self):
-        self.states = []
-
-    @staticmethod
-    def from_response_data(response_data):
-        pass
-
-
 class StatePopulationRecord(object):
 
     def __init__(self, population, state_name, state_id, year):
