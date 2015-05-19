@@ -17,13 +17,14 @@ def get_response_data(uri):
 
 class DataGovClientBase(object):
 
-    def __init__(self, uri_part, api_key):
+    def __init__(self, uri_part, api_key, use_format=True):
         self.uri_part = uri_part
         self.key = api_key
+        self.use_format = use_format
 
     def build_uri(self, api, uri_action, **kwargs):
         kwargs['api_key'] = self.key
-        if 'format' not in kwargs:
+        if 'format' not in kwargs and self.use_format:
             kwargs['format'] = 'json'
         params = urllib.urlencode(kwargs)
         return "{0}{1}{2}/{3}?{4}".format(uri_base, self.uri_part, api, uri_action, params)
